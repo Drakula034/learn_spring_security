@@ -237,3 +237,11 @@ VALUES (9, 'VIEWLOANS');
 
 INSERT INTO `authorities` (`customer_id`, `name`)
 VALUES (9, 'VIEWBALANCE');
+
+DELETE FROM `authorities`;
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (9, 'ROLE_USER');
+
+INSERT INTO `authorities` (`customer_id`, `name`)
+VALUES (9, 'ROLE_ADMIN');

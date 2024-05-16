@@ -41,7 +41,7 @@ public class ProjectSecurityConfig {
 
 
         http.securityContext(context -> context.requireExplicitSave(false))
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
                     @Override
@@ -57,19 +57,23 @@ public class ProjectSecurityConfig {
                 }))
                 .csrf(csrfCustomizer -> csrfCustomizer
                         .csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
-                        .ignoringRequestMatchers( "/register", "/contact")
+                        .ignoringRequestMatchers("/register", "/contact")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 
                 ).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 
                 .authorizeHttpRequests((requests) ->
-                        requests
-                                .requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
-                                .requestMatchers("/myBalance").hasAnyAuthority("VIEWACCOUNT", "VIEWBALANCE")
-                                .requestMatchers( "/myLoans").hasAuthority("VIEWLOANS")
-                                .requestMatchers("myCards").hasAuthority("VIEWCARDS")
-                                .requestMatchers( "/user").authenticated()
-                                .requestMatchers("/notices", "/register", "/contact").permitAll()
+                                requests
+//                                .requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
+//                                .requestMatchers("/myBalance").hasAnyAuthority("VIEWACCOUNT", "VIEWBALANCE")
+//                                .requestMatchers("/myLoans").hasAuthority("VIEWLOANS")
+//                                .requestMatchers("myCards").hasAuthority("VIEWCARDS")
+                                        .requestMatchers("/myAccount").hasRole("USER")
+                                        .requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN")
+                                        .requestMatchers("/myLoans").hasRole("USER")
+                                        .requestMatchers("myCards").hasRole("USER")
+                                        .requestMatchers("/user").authenticated()
+                                        .requestMatchers("/notices", "/register", "/contact").permitAll()
                 )
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
