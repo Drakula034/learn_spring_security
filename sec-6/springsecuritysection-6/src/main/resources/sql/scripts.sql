@@ -4,8 +4,8 @@ use eazybank;
 
 
 drop table `customer`;
-drop table `users`;
-drop table `authorities`;
+-- drop table `users`;
+-- drop table `authorities`;
 
 CREATE TABLE `customer`
 (
@@ -36,7 +36,7 @@ CREATE TABLE `accounts`
 );
 
 INSERT INTO `accounts` (`customer_id`, `account_number`, `account_type`, `branch_address`, `create_dt`)
-VALUES (1, 1865764534, 'Savings', '123 Main Street, New York', CURDATE());
+VALUES (9, 1865764534, 'Savings', '123 Main Street, New York', CURDATE());
 
 CREATE TABLE `account_transactions`
 (
@@ -61,37 +61,38 @@ CREATE TABLE `account_transactions`
 INSERT INTO `account_transactions` (`transaction_id`, `account_number`, `customer_id`, `transaction_dt`,
                                     `transaction_summary`, `transaction_type`, `transaction_amt`,
                                     `closing_balance`, `create_dt`)
-VALUES (UUID(), 1865764534, 1, DATE_SUB(CURDATE(), INTERVAL 7 DAY), 'Coffee Shop', 'Withdrawal', 30, 34500,
+VALUES (UUID(), 1865764534, 9, DATE_SUB(CURDATE(), INTERVAL 7 DAY), 'Coffee Shop', 'Withdrawal', 30, 34500,
         DATE_SUB(CURDATE(), INTERVAL 7 DAY));
+
 
 INSERT INTO `account_transactions` (`transaction_id`, `account_number`, `customer_id`, `transaction_dt`,
                                     `transaction_summary`, `transaction_type`, `transaction_amt`,
                                     `closing_balance`, `create_dt`)
-VALUES (UUID(), 1865764534, 1, DATE_SUB(CURDATE(), INTERVAL 6 DAY), 'Uber', 'Withdrawal', 100, 34400,
+VALUES (UUID(), 1865764534, 9, DATE_SUB(CURDATE(), INTERVAL 6 DAY), 'Uber', 'Withdrawal', 100, 34400,
         DATE_SUB(CURDATE(), INTERVAL 6 DAY));
 
 INSERT INTO `account_transactions` (`transaction_id`, `account_number`, `customer_id`, `transaction_dt`,
                                     `transaction_summary`, `transaction_type`, `transaction_amt`,
                                     `closing_balance`, `create_dt`)
-VALUES (UUID(), 1865764534, 1, DATE_SUB(CURDATE(), INTERVAL 5 DAY), 'Self Deposit', 'Deposit', 500, 34900,
+VALUES (UUID(), 1865764534, 9, DATE_SUB(CURDATE(), INTERVAL 5 DAY), 'Self Deposit', 'Deposit', 500, 34900,
         DATE_SUB(CURDATE(), INTERVAL 5 DAY));
 
 INSERT INTO `account_transactions` (`transaction_id`, `account_number`, `customer_id`, `transaction_dt`,
                                     `transaction_summary`, `transaction_type`, `transaction_amt`,
                                     `closing_balance`, `create_dt`)
-VALUES (UUID(), 1865764534, 1, DATE_SUB(CURDATE(), INTERVAL 4 DAY), 'Ebay', 'Withdrawal', 600, 34300,
+VALUES (UUID(), 1865764534, 9, DATE_SUB(CURDATE(), INTERVAL 4 DAY), 'Ebay', 'Withdrawal', 600, 34300,
         DATE_SUB(CURDATE(), INTERVAL 4 DAY));
 
 INSERT INTO `account_transactions` (`transaction_id`, `account_number`, `customer_id`, `transaction_dt`,
                                     `transaction_summary`, `transaction_type`, `transaction_amt`,
                                     `closing_balance`, `create_dt`)
-VALUES (UUID(), 1865764534, 1, DATE_SUB(CURDATE(), INTERVAL 2 DAY), 'OnlineTransfer', 'Deposit', 700, 35000,
+VALUES (UUID(), 1865764534, 9, DATE_SUB(CURDATE(), INTERVAL 2 DAY), 'OnlineTransfer', 'Deposit', 700, 35000,
         DATE_SUB(CURDATE(), INTERVAL 2 DAY));
 
 INSERT INTO `account_transactions` (`transaction_id`, `account_number`, `customer_id`, `transaction_dt`,
                                     `transaction_summary`, `transaction_type`, `transaction_amt`,
                                     `closing_balance`, `create_dt`)
-VALUES (UUID(), 1865764534, 1, DATE_SUB(CURDATE(), INTERVAL 1 DAY), 'Amazon.com', 'Withdrawal', 100, 34900,
+VALUES (UUID(), 1865764534, 9, DATE_SUB(CURDATE(), INTERVAL 1 DAY), 'Amazon.com', 'Withdrawal', 100, 34900,
         DATE_SUB(CURDATE(), INTERVAL 1 DAY));
 
 
@@ -110,21 +111,22 @@ CREATE TABLE `loans`
     CONSTRAINT `loan_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
 );
 
-INSERT INTO `loans` (`customer_id`, `start_dt`, `loan_type`, `total_loan`, `amount_paid`, `outstanding_amount`,
-                     `create_dt`)
-VALUES (1, '2020-10-13', 'Home', 200000, 50000, 150000, '2020-10-13');
 
 INSERT INTO `loans` (`customer_id`, `start_dt`, `loan_type`, `total_loan`, `amount_paid`, `outstanding_amount`,
                      `create_dt`)
-VALUES (1, '2020-06-06', 'Vehicle', 40000, 10000, 30000, '2020-06-06');
+VALUES (9, '2020-10-13', 'Home', 200000, 50000, 150000, '2020-10-13');
 
 INSERT INTO `loans` (`customer_id`, `start_dt`, `loan_type`, `total_loan`, `amount_paid`, `outstanding_amount`,
                      `create_dt`)
-VALUES (1, '2018-02-14', 'Home', 50000, 10000, 40000, '2018-02-14');
+VALUES (9, '2020-06-06', 'Vehicle', 40000, 10000, 30000, '2020-06-06');
 
 INSERT INTO `loans` (`customer_id`, `start_dt`, `loan_type`, `total_loan`, `amount_paid`, `outstanding_amount`,
                      `create_dt`)
-VALUES (1, '2018-02-14', 'Personal', 10000, 3500, 6500, '2018-02-14');
+VALUES (9, '2018-02-14', 'Home', 50000, 10000, 40000, '2018-02-14');
+
+INSERT INTO `loans` (`customer_id`, `start_dt`, `loan_type`, `total_loan`, `amount_paid`, `outstanding_amount`,
+                     `create_dt`)
+VALUES (9, '2018-02-14', 'Personal', 10000, 3500, 6500, '2018-02-14');
 
 CREATE TABLE `cards`
 (
@@ -141,17 +143,18 @@ CREATE TABLE `cards`
     CONSTRAINT `card_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
 );
 
-INSERT INTO `cards` (`card_number`, `customer_id`, `card_type`, `total_limit`, `amount_used`, `available_amount`,
-                     `create_dt`)
-VALUES ('4565XXXX4656', 1, 'Credit', 10000, 500, 9500, CURDATE());
 
 INSERT INTO `cards` (`card_number`, `customer_id`, `card_type`, `total_limit`, `amount_used`, `available_amount`,
                      `create_dt`)
-VALUES ('3455XXXX8673', 1, 'Credit', 7500, 600, 6900, CURDATE());
+VALUES ('4565XXXX4656', 9, 'Credit', 10000, 500, 9500, CURDATE());
 
 INSERT INTO `cards` (`card_number`, `customer_id`, `card_type`, `total_limit`, `amount_used`, `available_amount`,
                      `create_dt`)
-VALUES ('2359XXXX9346', 1, 'Credit', 20000, 4000, 16000, CURDATE());
+VALUES ('3455XXXX8673', 9, 'Credit', 7500, 600, 6900, CURDATE());
+
+INSERT INTO `cards` (`card_number`, `customer_id`, `card_type`, `total_limit`, `amount_used`, `available_amount`,
+                     `create_dt`)
+VALUES ('2359XXXX9346', 9, 'Credit', 20000, 4000, 16000, CURDATE());
 
 CREATE TABLE `notice_details`
 (
@@ -164,6 +167,7 @@ CREATE TABLE `notice_details`
     `update_dt`      date DEFAULT NULL,
     PRIMARY KEY (`notice_id`)
 );
+
 
 INSERT INTO `notice_details` (`notice_summary`, `notice_details`, `notic_beg_dt`, `notic_end_dt`, `create_dt`,
                               `update_dt`)
