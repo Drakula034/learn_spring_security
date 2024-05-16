@@ -64,7 +64,11 @@ public class ProjectSecurityConfig {
 
                 .authorizeHttpRequests((requests) ->
                         requests
-                                .requestMatchers("/myAccount", "/myBalance", "/myLoans", "myCards", "/user").authenticated()
+                                .requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
+                                .requestMatchers("/myBalance").hasAnyAuthority("VIEWACCOUNT", "VIEWBALANCE")
+                                .requestMatchers( "/myLoans").hasAuthority("VIEWLOANS")
+                                .requestMatchers("myCards").hasAuthority("VIEWCARDS")
+                                .requestMatchers( "/user").authenticated()
                                 .requestMatchers("/notices", "/register", "/contact").permitAll()
                 )
                 .formLogin(Customizer.withDefaults())
