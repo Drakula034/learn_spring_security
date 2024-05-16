@@ -42,7 +42,7 @@ public class ProjectSecurityConfig {
                         return corsConfiguration;
                     }
                 }))
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrfCustomizer-> csrfCustomizer.ignoringRequestMatchers("/contact", "/register"))
                 .authorizeHttpRequests((requests) ->
                         requests
                                 .requestMatchers("/myAccount", "/myBalance", "/myLoans", "myCards", "/user").authenticated()
