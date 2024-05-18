@@ -1,5 +1,6 @@
 package com.eazybytes.config;
 
+import com.eazybytes.filter.AuthoritiesLoggingAfterFilter;
 import com.eazybytes.filter.CsrfCookieFilter;
 import com.eazybytes.filter.RequestValidationBeforeFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,6 +64,7 @@ public class ProjectSecurityConfig {
 
                 ).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
 
                 .authorizeHttpRequests((requests) ->
                                 requests
