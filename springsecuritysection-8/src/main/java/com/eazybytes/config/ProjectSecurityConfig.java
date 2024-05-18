@@ -1,6 +1,7 @@
 package com.eazybytes.config;
 
 import com.eazybytes.filter.CsrfCookieFilter;
+import com.eazybytes.filter.RequestValidationBeforeFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -61,6 +62,7 @@ public class ProjectSecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 
                 ).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
 
                 .authorizeHttpRequests((requests) ->
                                 requests
@@ -75,7 +77,7 @@ public class ProjectSecurityConfig {
                                         .requestMatchers("/user").authenticated()
                                         .requestMatchers("/notices", "/register", "/contact").permitAll()
                 )
-                .formLogin(Customizer.withDefaults())
+                .formLogin(withDefaults())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
