@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://springsecurity.cfs0kko66f0x.us-east-1.rds.amazonaws.com/eazybank
+    username: admin
+    password: springsecurity
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
