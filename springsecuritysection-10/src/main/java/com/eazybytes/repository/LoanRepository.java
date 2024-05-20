@@ -12,7 +12,7 @@ import com.eazybytes.model.Loans;
 @Repository
 public interface LoanRepository extends JpaRepository<Loans, Long> {
 
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     List<Loans> findByCustomerIdOrderByStartDtDesc(int customerId);
 
 }
